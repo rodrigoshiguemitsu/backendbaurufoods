@@ -1,0 +1,97 @@
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mysql"
+
+    url      = env("DATABASE_URL")
+}
+
+
+model Administrador{
+    id String @id @default(uuid())
+    nomeUsuario String
+    senha String
+
+    create_at DateTime? @default(now())
+    update_at DateTime? @default(now())
+
+    @@map("administrador")
+
+}
+model Clientes{
+    id String @id @default(uuid())
+
+    nome String
+    email String
+    senha String
+    tipoDocumento String
+    cpf String
+    ddd String
+    whatsapp String
+    cep String
+    endereco String
+    numero String
+    bairro String
+    cidade String
+    estado String
+
+    create_at DateTime? @default(now())
+    update_at DateTime? @default(now())
+
+
+
+    @@map("clientes")
+}
+
+model CadCategoria{
+    id String @id @default(uuid())
+    
+    nomeCategoria String
+    banner String
+
+    create_at DateTime? @default(now())
+    update_at DateTime? @default(now())
+
+    cadprodutos CadProdutos[] @relation("CategoriaProdutos")
+
+    @@map("cadcategoria")
+}
+
+model CadProdutos{
+    id String @id @default(uuid())
+
+    nome String 
+    descricao String
+    dataInicial String
+    dataValidade String
+    quantidade String
+    concorrentePreco String
+    preco String
+    banner String
+    categoriaId String
+    
+    create_at DateTime? @default(now())
+    update_at DateTime? @default(now())
+
+    cadcategoria CadCategoria @relation(fields: [categoriaId], references: [id], name: "CategoriaProdutos")
+    
+    
+
+    @@map("cadprodutos")
+}
+
+model CarrinhoCliente {
+    id String @id @default(uuid())
+
+    nomeCliente String
+    produtoCar Json
+    valorTotal Float
+
+    create_at DateTime? @default(now())
+    update_at DateTime? @default(now())
+
+    @@map("carrinhocliente")
+}
