@@ -20,11 +20,21 @@ class CadCliente{
 
     async exCadastroCliente({nome,email,password,tipoDocumento,cpf,ddd,whatsapp,cep,endereco,numero,bairro,cidade,estado}:CadastroCliente){
         
-        try{
-
+       
             const senhaCrypt = await hash(password, 8)
 
-            const novoCliente = await prismaClient.clientes.create({
+            const verCpfEmail = await prismaClient.clientes.findFirst({
+                where:{
+                    cpf:cpf,
+                    email:email
+                }
+            })
+            if(verCpfEmail){
+                throw new Error ('Cliente já cadastrado!')
+            }
+            
+
+            await prismaClient.clientes.create({
                 data: {
                     nome:nome,
                     email:email,
@@ -42,13 +52,9 @@ class CadCliente{
                 }
                 
             })
-            console.log("Cliente Cadastrado",novoCliente)
+            
             return {dados:"Cliente cadastrado com sucesso"}
-        }catch(error){
-            console.error("Erro ao cadastrar cliente",error)
-            // throw new Error("Erro ao cadastrar cliente")
-            return { error: `Erro ao cadastrar cliente: ${error.message}` };
-        }
+        
     }
 
 }
