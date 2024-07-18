@@ -24,6 +24,7 @@ model Administrador{
 model Clientes{
     id String @id @default(uuid())
 
+    codigoIdCliente String @unique
     nome String
     email String
     senha String
@@ -67,10 +68,15 @@ model CadProdutos{
     descricao String
     dataInicial String
     dataValidade String
+    end_time DateTime
     quantidade String
-    concorrentePreco String
+    desconto String
+    precoAtual String
     preco String
-    banner String
+    banners Banner[]
+    enderecoEmpresa String
+    linkComoChegar String
+    whatsappLoja String
     categoriaId String
     
     create_at DateTime? @default(now())
@@ -81,6 +87,16 @@ model CadProdutos{
     
 
     @@map("cadprodutos")
+}
+
+model Banner{
+  id         String      @id @default(uuid())
+  url        String
+  produtoId  String
+  cadproduto    CadProdutos @relation(fields: [produtoId], references: [id])
+  create_at  DateTime?   @default(now())
+  
+  @@map("banners")
 }
 
 model CarrinhoCliente {

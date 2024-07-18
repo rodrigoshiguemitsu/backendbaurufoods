@@ -10,7 +10,11 @@ class ListarProdutosServices{
     
     async exListarProdutosServices(){
 
-        const ListarProdutosServices = await prismaClient.cadProdutos.findMany({})
+        const ListarProdutosServices = await prismaClient.cadProdutos.findMany({
+            include:{
+                banners:true
+            }
+        })
         return (ListarProdutosServices)
 
     }
@@ -25,13 +29,22 @@ class ListarProdutosServices{
                 descricao:true,
                 dataInicial:true,
                 dataValidade:true,
+                end_time:true,
                 quantidade:true,
-                concorrentePreco:true,
+                desconto:true,
+                precoAtual:true,
                 preco:true,
-                banner:true,
+                enderecoEmpresa:true,
+                linkComoChegar:true,
+                whatsappLoja:true,
                 categoriaId:true,
                 create_at:true,
-                update_at:true
+                update_at:true,
+                banners:{
+                    select:{
+                        id:true,
+                    }
+                }
             }
         })
         return (listarProdutosIdServices)

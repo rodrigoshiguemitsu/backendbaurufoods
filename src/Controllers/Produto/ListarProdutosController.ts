@@ -14,7 +14,7 @@ class ListarProdutosController{
 
     async handleListarProdutosPets(req:Request,res:Response){
         
-        const categoriaId = 'c934c59a-5e92-4bcf-a3ab-5dc145a556fa'
+        const categoriaId = '5dd83185-63fd-4a45-bd67-c294d296326b'
 
         const listarProdutosPetsServices = new ListarProdutosServices()
         const resListarProdutosPets = await listarProdutosPetsServices.exListarProdutosIdServices({
@@ -34,7 +34,7 @@ class ListarProdutosController{
     }
 
     async handleListarProdutosPizzas(req:Request, res:Response){
-        const categoriaId = '93151094-ed2d-4ee3-b81a-4e74cb660fd7'
+        const categoriaId = '3b1e9770-ae85-49a9-a693-71f610ea2d22'
 
         const listarProdutosPizzas = new ListarProdutosServices()
         const resListarProdutosPizzas = await listarProdutosPizzas.exListarProdutosIdServices({
@@ -55,7 +55,7 @@ class ListarProdutosController{
 
 
     async handleListarProdutosPorcoes(req:Request,res:Response){
-        const categoriaId = '4468aaaf-a747-4505-80e2-0bd5dcd452a2'
+        const categoriaId = '234b1166-5deb-48b4-a8f7-1b131e374f6b'
 
         const listarProdutosPorcoes = new ListarProdutosServices()
         const resListarProdutosPorcoes = await listarProdutosPorcoes.exListarProdutosIdServices({

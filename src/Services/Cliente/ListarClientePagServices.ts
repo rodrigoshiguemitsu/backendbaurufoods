@@ -17,6 +17,7 @@ class ListarClientePagServices{
                 nome:true,
                 email:true,
                 tipoDocumento:true,
+                codigoIdCliente:true,
                 cpf:true,
                 ddd:true,
                 whatsapp:true,

@@ -8,8 +8,8 @@ class GeneratePaymentLink {
   async handlePagamentosController(req: Request, res: Response) {
     const { valor, descricao, cliente } = req.body;
 
-    const token = process.env.PAGBANK_TOKEN
-    // const token = process.env.PAGBANK_TOKEN_PRODUCAO
+    const token = process.env.PAGBANK_TOKEN_LOCALHOST
+    // const token = process.env.PAGBANK_TOKEN
 
     const apiPagamento = axios.create({
       // baseURL: "https://api.pagseguro.com",
@@ -27,11 +27,17 @@ class GeneratePaymentLink {
 
 
     try {
+
+      const expirationDate = new Date();
+      expirationDate.setHours(expirationDate.getHours() + 1); // Adiciona 1 hora
+      const expirationDateString = expirationDate.toISOString();
+
+
       const amountValue = parseFloat(valor)
       const gerarLinkPagamento = await apiPagamento.post('/orders',
         {
           amount: {
-            value: amountValue,
+            value: amountValue.toFixed(2),
           },
           description: descricao,
           customer: {
@@ -46,21 +52,26 @@ class GeneratePaymentLink {
               areaCode: cliente.telefone.ddd,
               number: cliente.telefone.numero
             }
-          }
+          },
+          payment_method:{
+            pix:{
+                holder:{
+                  name: cliente.nome,
+                  tax_id:cliente.documento
+                }
+            },
+            qr_codes:{
+              expiration_date: expirationDateString,
+              amount:{
+                value: amountValue.toFixed(2)
+              }
+            }
+          }            
         }
       );
       console.log(gerarLinkPagamento.data)
       const payLink = gerarLinkPagamento.data.links.find(link => link.rel === 'PAY');
       return res.json({ paymentLink: payLink.href })
-
-      // Salvando os detalhes do pagamento no banco de dados
-      //   const createPayment = new CreatePayment()
-      //   const payment = await createPayment.excuteCreatePayment({
-      //       valor,
-      //       descricao,
-      //       paymentLink
-      //   });
-      // return res.json({payment,paymentLink})
 
     } catch (error) {
       console.error('Erro ao gerar link de pagamento:', error);
