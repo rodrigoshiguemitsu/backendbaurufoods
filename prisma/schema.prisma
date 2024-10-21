@@ -5,6 +5,7 @@ generator client {
 
 datasource db {
     provider = "mysql"
+    // provider = "postgresql"
 
     url      = env("DATABASE_URL")
 }
@@ -104,6 +105,7 @@ model CarrinhoCliente {
 
     nomeCliente String
     produtoCar Json
+    codUsuario String
     valorTotal Float
 
     create_at DateTime? @default(now())
