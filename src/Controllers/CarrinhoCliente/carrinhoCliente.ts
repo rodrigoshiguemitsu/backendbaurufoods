@@ -8,12 +8,13 @@ import { CarrinhoClienteServices } from "../../Services/carrinhoClienteServices/
 
 class CarrinhoClienteController{
     async handlePedidoClienteController(req:Request,res:Response){
-        const {nomeCliente,produtoCar, valorTotal } = req.body
+        const {nomeCliente,produtoCar,codUsuario,valorTotal } = req.body
 
         const carrinhoClienteServices = new CarrinhoClienteServices()
         const respostaCarrinhoController = await carrinhoClienteServices.exCarrinhoClienteServices({
             nomeCliente,
             produtoCar,
+            codUsuario,
             valorTotal
         })
         return res.json(respostaCarrinhoController)

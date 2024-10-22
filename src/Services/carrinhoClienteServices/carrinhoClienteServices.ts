@@ -3,6 +3,7 @@ import prismaClient from "../../prisma"
 interface CriarCarrinhoCliente{
     nomeCliente:string
     produtoCar: any[]
+    codUsuario:string
     valorTotal: number
 }
 
@@ -12,12 +13,13 @@ interface CriarCarrinhoCliente{
 
 
 class CarrinhoClienteServices{
-   async exCarrinhoClienteServices({nomeCliente,produtoCar,valorTotal}:CriarCarrinhoCliente){
+   async exCarrinhoClienteServices({nomeCliente,produtoCar,codUsuario,valorTotal}:CriarCarrinhoCliente){
     
     const resCarrinhoClienteServices = await prismaClient.carrinhoCliente.create({
         data:{
             nomeCliente:nomeCliente,
             produtoCar:produtoCar,
+            codUsuario:codUsuario,
             valorTotal:valorTotal
         }
     })
